@@ -20,9 +20,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <nvdApiKey>7482231a-8300-4feb-9a2d-2b67bde0a382</nvdApiKey>
-                </configuration>
             </plugin>
         </plugins>
     </build>
