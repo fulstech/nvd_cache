@@ -30,6 +30,7 @@ jobs:
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
+          mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout
           mvn org.owasp:dependency-check-maven:update-only
 
       # Step 6: Archive cache folder
