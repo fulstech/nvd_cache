@@ -1,0 +1,39 @@
+name: Download and Archive NVD Data
+
+on:
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  nvd-download:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java with unlimited strength crypto
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17' # Adjust Java version if necessary
+          cache: 'gradle'
+
+      - name: Enable unlimited strength crypto
+        run: |
+          sudo apt-get install -y openjdk-17-policy
+          echo "crypto.policy=unlimited" | sudo tee -a $JAVA_HOME/conf/security/java.security
+
+      - name: Download NVD data
+        run: |
+          mkdir -p cache
+          java -jar ./vulnz-7.0.1.jar cve --cache --directory ./cache
+
+      - name: Archive cache directory
+        run: |
+          zip -r cache.zip ./cache
+
+      - name: Upload archive for download
+        uses: actions/upload-artifact@v3
+        with:
+          name: nvd-cache
+          path: cache.zip
