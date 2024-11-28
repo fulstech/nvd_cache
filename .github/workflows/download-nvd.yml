@@ -17,6 +17,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Enable unlimited strength crypto
+        run: |
+          echo "crypto.policy=unlimited" | sudo tee -a $JAVA_HOME/conf/security/java.security
+
       - name: Download NVD data
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }} # Securely fetch the API key from GitHub Secrets
