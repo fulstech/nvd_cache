@@ -15,8 +15,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17' # Adjust Java version if necessary
-          cache: 'gradle'
+          java-version: '17'
 
       - name: Enable unlimited strength crypto
         run: |
