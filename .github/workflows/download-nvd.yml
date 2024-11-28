@@ -18,6 +18,8 @@ jobs:
           java-version: '17'
 
       - name: Download NVD data
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }} # Securely fetch the API key from GitHub Secrets
         run: |
           mkdir -p cache
           java -jar ./vulnz-7.0.1.jar cve --cache --directory ./cache
