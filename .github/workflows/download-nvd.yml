@@ -30,12 +30,12 @@ jobs:
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
-          mvn org.owasp:dependency-check-maven:update-only
+          mvn org.owasp:dependency-check-maven:11.1.0:update-only
 
       # Step 6: Archive cache folder
       - name: Archive dependency-check cache
         run: |
-          tar -czf dependency-check-cache.tar.gz ~/.m2/repository/org/owasp/dependency-check/
+          tar -czf dependency-check-cache.tar.gz ~/.m2/repository
         continue-on-error: true
       - name: Upload cache
         uses: actions/upload-artifact@v3
