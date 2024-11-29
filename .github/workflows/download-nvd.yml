@@ -21,8 +21,8 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      # Step 3: Cache Maven dependencies (always update cache)
-      - name: Cache Maven dependencies
+      # Step 3: Restore Maven dependencies cache
+      - name: Restore Maven dependencies cache
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
@@ -43,13 +43,24 @@ jobs:
         run: |
           mvn org.owasp:dependency-check-maven:11.1.0:update-only -DnvdApiKeyEnvironmentVariable=NVD_API_KEY
 
-      # Step 6: Archive cache folder for dependency-check-specific cache
-      - name: Archive dependency-check cache
+      # Step 6: Archive NVD data
+      - name: Archive NVD data
         run: |
           tar -czf dependency-check-cache.tar.gz ~/.m2/repository/org/owasp
         continue-on-error: true
-      - name: Upload dependency-check cache
+
+      # Step 7: Upload the NVD data
+      - name: Upload NVD data
         uses: actions/upload-artifact@v4
         with:
           name: dependency-check-cache
           path: dependency-check-cache.tar.gz
+
+      # Step 8: Save updated Maven dependencies cache
+      - name: Save updated Maven dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: maven-cache-${{ github.run_id }}
+          restore-keys: |
+            maven-cache-
