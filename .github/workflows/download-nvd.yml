@@ -35,10 +35,10 @@ jobs:
       # Step 6: Archive cache folder
       - name: Archive dependency-check cache
         run: |
-          tar -czf dependency-check-cache.tar.gz ~/.m2/repository
+          tar -czf dependency-check-cache.tar.gz ~/.m2/repository/org/owasp
         continue-on-error: true
       - name: Upload cache
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dependency-check-cache
           path: dependency-check-cache.tar.gz
