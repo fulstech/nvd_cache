@@ -41,7 +41,7 @@ jobs:
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
-          mvn org.owasp:dependency-check-maven:11.1.0:update-only -DnvdApiKeyEnvironmentVariable=NVD_API_KEY
+          mvn org.owasp:dependency-check-maven:12.1.0:update-only -DnvdApiKeyEnvironmentVariable=NVD_API_KEY
 
       # Step 6: Archive NVD data
       - name: Archive NVD data
